@@ -5,14 +5,14 @@
 using namespace std;
 
 // Node untuk menyimpan menu makanan
-struct Menu {
+struct Menu { // Struktur untuk menyimpan data menu
     int kode;          // kode unik
     string nama;       // nama makanan
     int harga;         // harga
     Menu* next;        // penunjuk ke node selanjutnya
 };
 
-class MenuList {
+class MenuList { // Kelas untuk mengelola daftar menu
     Menu* head; // pointer ke awal list
 
     public:
