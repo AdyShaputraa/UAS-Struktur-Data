@@ -4,46 +4,50 @@
 #include <iostream>
 using namespace std;
 
-#define SIZE 10
-
+#define MAX 10
 class StackArray {
-    string pelanggan[SIZE];
-    int total[SIZE];
-    int top;
+    private:
+    string nama[MAX]; // array untuk nama pembeli
+    int total[MAX];   // array untuk total belanja
+    int top;          // indeks atas stack
 
-public:
+    public:
     StackArray() {
-        top = -1;
+        top = -1; // inisialisasi stack kosong
     }
 
-    void push(string nama, int harga) {
-        if (top == SIZE - 1) {
-            cout << "Stack penuh!\n";
+    // Menambahkan transaksi ke stack
+    void push(string n, int t) {
+        if (top == MAX - 1) {
+            cout << "Stack penuh.\n";
             return;
         }
-        top++;
-        pelanggan[top] = nama;
-        total[top] = harga;
-        cout << "Transaksi " << nama << " disimpan.\n";
+        top++; // naikkan indeks
+        nama[top] = n;
+        total[top] = t;
+        cout << "Transaksi " << n << " disimpan.\n";
     }
 
+    // Menghapus transaksi terakhir
     void pop() {
+        if (top == -1) {
+            cout << "Stack kosong.\n";
+            return;
+        }
+        cout << "Undo transaksi: " << nama[top] << " - Rp " << total[top] << endl;
+        top--; // turunkan indeks
+    }
+
+    // Menampilkan transaksi
+    void display() {
         if (top == -1) {
             cout << "Tidak ada transaksi.\n";
             return;
         }
-        cout << "Undo: " << pelanggan[top] << " - Rp " << total[top] << endl;
-        top--;
-    }
-
-    void tampil() {
-        if (top == -1) {
-            cout << "Stack kosong\n";
-            return;
-        }
         cout << "Riwayat Transaksi:\n";
-        for (int i = top; i >= 0; i--)
-            cout << pelanggan[i] << " - Rp " << total[i] << endl;
+        for (int i = top; i >= 0; i--) {
+            cout << nama[i] << " - Rp " << total[i] << endl;
+        }
     }
 };
 
@@ -53,6 +57,6 @@ int main() {
     s.push("Akbar", 12000);
     s.pop();
     s.push("Diki", 13000);
-    s.tampil();
+    s.display();
     return 0;
 }

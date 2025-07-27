@@ -1,49 +1,57 @@
 // Mengelola antrian menggunakan array
 // Implementasi Queue dengan Array
 
-#include <iostream>
+#include <iostream> // untuk input-output
 using namespace std;
 
-#define SIZE 10
+#define MAX 100 // batas maksimal antrian
 
 class QueueArray {
-    string antrian[SIZE]; // Array antrian pelanggan
-    int front, rear;
+private:
+    string data[MAX]; // array untuk menyimpan nama pelanggan
+    int front, rear;  // indeks depan dan belakang antrian
 
 public:
     QueueArray() {
-        front = -1;
-        rear = -1;
+        front = rear = -1; // inisialisasi antrian kosong
     }
 
-    // Tambah pelanggan
+    // Fungsi untuk menambahkan pelanggan ke antrian
     void enqueue(string nama) {
-        if (rear == SIZE - 1) {
+        if (rear == MAX - 1) { // jika antrian penuh
             cout << "Antrian penuh!\n";
             return;
         }
-        if (front == -1) front = 0;
-        antrian[++rear] = nama;
+
+        if (front == -1) front = 0; // jika antrian masih kosong
+
+        rear++; // geser indeks belakang
+        data[rear] = nama; // masukkan data ke array
         cout << nama << " masuk antrian.\n";
     }
 
-    // Proses pelanggan (hapus dari depan)
+    // Fungsi untuk menghapus pelanggan dari antrian
     void dequeue() {
-        if (front == -1 || front > rear) {
+        if (front == -1 || front > rear) { // jika antrian kosong
             cout << "Antrian kosong!\n";
             return;
         }
-        cout << antrian[front++] << " keluar dari antrian.\n";
+
+        cout << data[front] << " keluar dari antrian.\n";
+        front++; // geser indeks depan
+
+        if (front > rear) front = rear = -1; // reset jika antrian habis
     }
 
+    // Menampilkan isi antrian
     void tampil() {
-        if (front == -1 || front > rear) {
-            cout << "Antrian kosong!\n";
+        if (front == -1) {
+            cout << "Antrian kosong.\n";
             return;
         }
         cout << "Antrian saat ini:\n";
         for (int i = front; i <= rear; i++) {
-            cout << "- " << antrian[i] << endl;
+            cout << "- " << data[i] << endl;
         }
     }
 };

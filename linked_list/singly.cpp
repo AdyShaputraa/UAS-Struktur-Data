@@ -4,65 +4,71 @@
 #include <iostream>
 using namespace std;
 
+// Node untuk menyimpan menu makanan
 struct Menu {
-    int kode;
-    string nama;
-    int harga;
-    Menu* next;
+    int kode;          // kode unik
+    string nama;       // nama makanan
+    int harga;         // harga
+    Menu* next;        // penunjuk ke node selanjutnya
 };
 
 class MenuList {
-    Menu* head;
+    Menu* head; // pointer ke awal list
 
-public:
+    public:
     MenuList() {
-        head = nullptr;
+        head = nullptr; // awalnya kosong
     }
 
+    // Tambah menu ke akhir list
     void tambahMenu(int kode, string nama, int harga) {
         Menu* baru = new Menu{kode, nama, harga, nullptr};
-        if (!head)
-            head = baru;
-        else {
+        if (!head) {
+            head = baru; // jika kosong, jadi head
+        } else {
             Menu* temp = head;
-            while (temp->next)
-                temp = temp->next;
-            temp->next = baru;
+            while (temp->next) temp = temp->next; // cari ujung list
+            temp->next = baru; // tambahkan ke akhir
         }
-        cout << "Menu berhasil ditambahkan.\n";
+        cout << "Menu ditambahkan.\n";
     }
 
+    // Hapus menu berdasarkan kode
     void hapusMenu(int kode) {
         if (!head) {
-            cout << "Menu kosong.\n";
+            cout << "List kosong\n";
             return;
         }
+
         if (head->kode == kode) {
-            Menu* temp = head;
+            Menu* tmp = head;
             head = head->next;
-            delete temp;
+            delete tmp;
             cout << "Menu dihapus.\n";
             return;
         }
+
         Menu* curr = head;
         while (curr->next && curr->next->kode != kode)
             curr = curr->next;
 
         if (curr->next) {
-            Menu* temp = curr->next;
-            curr->next = temp->next;
-            delete temp;
+            Menu* tmp = curr->next;
+            curr->next = tmp->next;
+            delete tmp;
             cout << "Menu dihapus.\n";
         } else {
-            cout << "Kode menu tidak ditemukan.\n";
+            cout << "Menu tidak ditemukan.\n";
         }
     }
 
+    // Tampilkan semua menu
     void tampilMenu() {
         if (!head) {
-            cout << "Menu kosong.\n";
+            cout << "Belum ada menu.\n";
             return;
         }
+
         Menu* temp = head;
         cout << "Daftar Menu:\n";
         while (temp) {
